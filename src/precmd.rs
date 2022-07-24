@@ -201,8 +201,13 @@ pub fn display(sub_matches: &ArgMatches<'_>) {
     };
     let display_branch = Cyan.paint(branch.unwrap_or_default());
 
+    let nix = env::var("IN_NIX_SHELL")
+        .map(|s| if s.trim().is_empty() { "" } else { "◆" } );
+
+    let display_nix = Purple.paint(nix.unwrap_or_default());
+
     println!();
-    println!("{} {}", display_path, display_branch);
+    println!("{} {} {}", display_path, display_branch, display_nix);
 }
 
 pub fn cli_arguments<'a>() -> App<'a, 'a> {
